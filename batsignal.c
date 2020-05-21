@@ -30,17 +30,17 @@ static unsigned int multiplier = 60;
 
 /* battery warning levels */
 static unsigned int warning = 15;
-static unsigned int critical = 5;
-static unsigned int danger = 2;
+static unsigned int critical = 10;
+static unsigned int danger = 3;
 static unsigned int full = 0;
 
 /* messages for battery levels */
-static char *warningmsg = "Battery is low";
-static char *criticalmsg = "Battery is critically low";
-static char *fullmsg = "Battery is full";
+static char *warningmsg = "charge me";
+static char *criticalmsg = "seriously charge me!";
+static char *fullmsg = "battery is full";
 
 /* run this system command if battery reaches danger level */
-static char *dangercmd = "";
+static char *dangercmd = "systemctl hibernate";
 
 /* app name for notification */
 static char *appname = PROGNAME;
@@ -85,7 +85,7 @@ Options:\n\
 void notify(char *msg, NotifyUrgency urgency)
 {
   char body[20];
-  sprintf(body, "Battery level: %u%%", battery_level);
+  sprintf(body, "\nbattery is at %u%%", battery_level);
 
   if (msg[0] != '\0' && notify_init(appname)) {
     NotifyNotification *notification = notify_notification_new(msg, body, NULL);
